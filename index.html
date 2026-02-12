@@ -1,330 +1,269 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<title>Calculadora de Datas</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Calculadora de Datas Pro</title>
 
 <style>
 :root {
-    --primary: #2563eb;
-    --secondary: #1e293b;
-    --background: #f8fafc;
-    --card: #ffffff;
-    --border: #e5e7eb;
-    --text: #0f172a;
+  --bg: #0f172a;
+  --card: #111827;
+  --primary: #38bdf8;
+  --primary-soft: #0ea5e9;
+  --text: #e5e7eb;
+  --muted: #94a3b8;
+  --border: #1f2937;
 }
 
-* {
-    box-sizing: border-box;
-}
+* { box-sizing: border-box; }
 
 body {
-    margin: 0;
-    font-family: "Segoe UI", Roboto, Arial, sans-serif;
-    background: var(--background);
-    color: var(--text);
+  margin: 0;
+  font-family: "Segoe UI", Roboto, Arial, sans-serif;
+  background: radial-gradient(circle at top, #020617, var(--bg));
+  color: var(--text);
 }
 
-/* Container principal */
 .container {
-    max-width: 720px;
-    margin: 40px auto;
-    background: var(--card);
-    border-radius: 14px;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.08);
-    overflow: hidden;
+  max-width: 900px;
+  margin: 20px auto;
+  background: var(--card);
+  border-radius: 22px;
+  box-shadow: 0 25px 60px rgba(0,0,0,0.6);
+  overflow: hidden;
+  border: 1px solid var(--border);
 }
 
-/* Cabeçalho */
 .header {
-    padding: 25px;
-    background: linear-gradient(135deg, var(--primary), #1d4ed8);
-    color: white;
-    text-align: center;
+  padding: 35px 20px;
+  background: linear-gradient(135deg, #020617, #0ea5e9);
+  text-align: center;
 }
 
 .header h1 {
-    margin: 0;
-    font-size: 24px;
+  margin: 0;
+  font-size: 28px;
+  letter-spacing: 0.5px;
 }
 
-/* Abas */
 .tabs {
-    display: flex;
-    background: #f1f5f9;
-    border-bottom: 1px solid var(--border);
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  border-bottom: 1px solid var(--border);
 }
 
 .tab-button {
-    flex: 1;
-    padding: 14px;
-    border: none;
-    background: transparent;
-    font-weight: 600;
-    cursor: pointer;
-    color: var(--secondary);
-    transition: all 0.3s;
+  padding: 14px 8px;
+  border: none;
+  background: transparent;
+  color: var(--muted);
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.25s;
 }
 
-.tab-button:hover {
-    background: #e2e8f0;
-}
+.tab-button:hover { background: #020617; }
 
 .tab-button.active {
-    background: var(--card);
-    color: var(--primary);
-    border-bottom: 3px solid var(--primary);
+  color: var(--primary);
+  border-bottom: 2px solid var(--primary);
+  background: #020617;
 }
 
-/* Conteúdo */
-.content {
-    padding: 25px;
-}
+.content { padding: 24px; }
 
-.tab-content {
-    display: none;
-}
-
-.tab-content.active {
-    display: block;
-}
-
-/* Formulários */
-.form-group {
-    margin-bottom: 15px;
-}
-
-label {
-    display: block;
-    font-size: 14px;
-    font-weight: 600;
-    margin-bottom: 5px;
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 12px;
 }
 
 input, select {
-    width: 100%;
-    padding: 10px 12px;
-    border-radius: 8px;
-    border: 1px solid var(--border);
-    font-size: 15px;
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: #020617;
+  color: var(--text);
+  font-size: 15px;
 }
 
-input:focus, select:focus {
-    outline: none;
-    border-color: var(--primary);
+input:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 1px var(--primary);
 }
 
-/* Grid */
-.grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-    gap: 12px;
-}
-
-/* Botão */
 button {
-    width: 100%;
-    margin-top: 10px;
-    padding: 12px;
-    background: var(--primary);
-    color: white;
-    border: none;
-    border-radius: 10px;
-    font-size: 16px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: transform .2s, box-shadow .2s;
+  width: 100%;
+  margin-top: 14px;
+  padding: 14px;
+  border-radius: 14px;
+  border: none;
+  background: linear-gradient(135deg, var(--primary), var(--primary-soft));
+  color: #020617;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.25s;
+  font-size: 15px;
 }
 
 button:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 8px 20px rgba(37,99,235,.3);
+  transform: translateY(-1px) scale(1.01);
+  box-shadow: 0 10px 25px rgba(14,165,233,0.35);
 }
 
-/* Resultado */
 .resultado {
-    margin-top: 20px;
-    padding: 15px;
-    border-radius: 10px;
-    background: #f1f5f9;
-    border-left: 5px solid var(--primary);
-    font-size: 15px;
+  margin-top: 20px;
+  padding: 18px;
+  border-radius: 14px;
+  background: #020617;
+  border: 1px solid var(--border);
+  font-size: 15px;
+  line-height: 1.5;
 }
 
-/* Responsivo */
+.tab-content { display: none; }
+.tab-content.active { display: block; }
+
+/* Mobile */
 @media (max-width: 600px) {
-    .container {
-        margin: 10px;
-    }
+  .tabs { grid-template-columns: 1fr 1fr; }
+  .header h1 { font-size: 22px; }
 }
 </style>
 </head>
 
 <body>
-
 <div class="container">
 
-    <div class="header">
-        <h1>📅 Calculadora de Datas</h1>
+  <div class="header">
+    <h1>🌙 Calculadora de Datas</h1>
+  </div>
+
+  <div class="tabs">
+    <button class="tab-button active" data-tab="0">Diferença</button>
+    <button class="tab-button" data-tab="1">Somar</button>
+    <button class="tab-button" data-tab="2">Subtrair</button>
+    <button class="tab-button" data-tab="3">Idade</button>
+    <button class="tab-button" data-tab="4">Contagem</button>
+  </div>
+
+  <div class="content">
+
+    <div class="tab-content active">
+      <div class="grid">
+        <input type="date" id="inicio" />
+        <input type="date" id="fim" />
+      </div>
+      <button class="calc" id="btnDiff">Calcular diferença</button>
+      <div class="resultado" id="resDiff"></div>
     </div>
 
-    <div class="tabs">
-        <button class="tab-button active" onclick="abrirAba(0)">Datas Avançadas</button>
-        <button class="tab-button" onclick="abrirAba(1)">Somar / Subtrair</button>
-        <button class="tab-button" onclick="abrirAba(2)">Idade</button>
+    <div class="tab-content">
+      <input type="date" id="base" />
+      <div class="grid">
+        <input type="number" id="dias" placeholder="Dias" />
+        <input type="number" id="meses" placeholder="Meses" />
+        <input type="number" id="anos" placeholder="Anos" />
+      </div>
+      <button class="calc" id="btnSomar">Calcular nova data</button>
+      <div class="resultado" id="resNova"></div>
     </div>
 
-    <div class="content">
-
-        <!-- ABA 1 -->
-        <div class="tab-content active">
-            <div class="form-group">
-                <label>Data inicial</label>
-                <div class="grid">
-                    <input type="date" id="dataInicialData">
-                    <input type="time" id="dataInicialHora">
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label>Data final</label>
-                <div class="grid">
-                    <input type="date" id="dataFinalData">
-                    <input type="time" id="dataFinalHora">
-                </div>
-            </div>
-
-            <button onclick="calcularDiferenca()">Calcular Diferença</button>
-            <div class="resultado" id="resultado"></div>
-        </div>
-
-        <!-- ABA 2 -->
-        <div class="tab-content">
-            <div class="form-group">
-                <label>Data base</label>
-                <input type="date" id="dataBase">
-            </div>
-
-            <div class="form-group">
-                <label>Operação</label>
-                <select id="operacao">
-                    <option value="somar">Somar</option>
-                    <option value="subtrair">Subtrair</option>
-                </select>
-            </div>
-
-            <div class="grid">
-                <input type="number" id="anos" placeholder="Anos" value="0">
-                <input type="number" id="meses" placeholder="Meses" value="0">
-                <input type="number" id="semanas" placeholder="Semanas" value="0">
-                <input type="number" id="dias" placeholder="Dias" value="0">
-            </div>
-
-            <button onclick="calcularNovaData()">Calcular Nova Data</button>
-            <div class="resultado" id="resultadoSoma"></div>
-        </div>
-
-        <!-- ABA 3 -->
-        <div class="tab-content">
-            <div class="form-group">
-                <label>Data de nascimento</label>
-                <input type="date" id="nascimento">
-            </div>
-
-            <button onclick="calcularIdade()">Calcular Idade</button>
-            <div class="resultado" id="resultadoIdade"></div>
-        </div>
-
+    <div class="tab-content">
+      <input type="date" id="baseSub" />
+      <div class="grid">
+        <input type="number" id="diasSub" placeholder="Dias" />
+        <input type="number" id="mesesSub" placeholder="Meses" />
+        <input type="number" id="anosSub" placeholder="Anos" />
+      </div>
+      <button class="calc" id="btnSub">Calcular nova data</button>
+      <div class="resultado" id="resSub"></div>
     </div>
+
+    <div class="tab-content">
+      <input type="date" id="nasc" />
+      <button class="calc" id="btnIdade">Calcular idade</button>
+      <div class="resultado" id="resIdade"></div>
+    </div>
+
+    <div class="tab-content">
+      <input type="date" id="evento" />
+      <button class="calc" id="btnContagem">Ver contagem</button>
+      <div class="resultado" id="resContagem"></div>
+    </div>
+
+  </div>
 </div>
 
 <script>
-function abrirAba(i) {
-    document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-    document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
-    document.querySelectorAll('.tab-content')[i].classList.add('active');
-    document.querySelectorAll('.tab-button')[i].classList.add('active');
-}
+const tabs = document.querySelectorAll('.tab-button');
+const contents = document.querySelectorAll('.tab-content');
 
-function calcularDiferenca() {
-    if (!dataInicialData.value || !dataFinalData.value) {
-        resultado.innerHTML = "Selecione as duas datas.";
-        return;
-    }
+tabs.forEach(btn => {
+  btn.addEventListener('click', () => {
+    const i = btn.dataset.tab;
 
-    const inicio = new Date(`${dataInicialData.value}T${dataInicialHora.value || "00:00"}`);
-    const fim = new Date(`${dataFinalData.value}T${dataFinalHora.value || "00:00"}`);
+    tabs.forEach(b => b.classList.remove('active'));
+    contents.forEach(c => c.classList.remove('active'));
 
-    if (inicio > fim) {
-        resultado.innerHTML = "A data final deve ser maior que a inicial.";
-        return;
-    }
+    btn.classList.add('active');
+    contents[i].classList.add('active');
+  });
+});
 
-    let anos = fim.getFullYear() - inicio.getFullYear();
-    let meses = fim.getMonth() - inicio.getMonth();
-    let dias = fim.getDate() - inicio.getDate();
+btnDiff.onclick = () => {
+  const d1 = new Date(inicio.value);
+  const d2 = new Date(fim.value);
+  if (!inicio.value || !fim.value) return;
 
-    if (dias < 0) {
-        meses--;
-        dias += new Date(fim.getFullYear(), fim.getMonth(), 0).getDate();
-    }
+  const dias = Math.floor((d2 - d1) / 86400000);
+  let uteis = 0;
+  for (let d = new Date(d1); d <= d2; d.setDate(d.getDate() + 1)) {
+    if (d.getDay() !== 0 && d.getDay() !== 6) uteis++;
+  }
 
-    if (meses < 0) {
-        anos--;
-        meses += 12;
-    }
+  resDiff.innerHTML = `<b>${dias} dias totais</b><br>Dias úteis: ${uteis}`;
+};
 
-    const ms = fim - inicio;
+btnSomar.onclick = () => {
+  if (!base.value) return;
+  let d = new Date(base.value);
+  d.setDate(d.getDate() + (+dias.value || 0));
+  d.setMonth(d.getMonth() + (+meses.value || 0));
+  d.setFullYear(d.getFullYear() + (+anos.value || 0));
+  resNova.innerHTML = `<b>${d.toLocaleDateString('pt-BR')}</b>`;
+};
 
-    resultado.innerHTML = `
-        <strong>${anos} anos, ${meses} meses e ${dias} dias</strong><br><br>
-        ${Math.floor(ms / 86400000)} dias •
-        ${Math.floor(ms / 3600000)} horas •
-        ${Math.floor(ms / 60000)} minutos •
-        ${Math.floor(ms / 1000)} segundos
-    `;
-}
+btnSub.onclick = () => {
+  if (!baseSub.value) return;
+  let d = new Date(baseSub.value);
+  d.setDate(d.getDate() - (+diasSub.value || 0));
+  d.setMonth(d.getMonth() - (+mesesSub.value || 0));
+  d.setFullYear(d.getFullYear() - (+anosSub.value || 0));
+  resSub.innerHTML = `<b>${d.toLocaleDateString('pt-BR')}</b>`;
+};
 
-function calcularNovaData() {
-    if (!dataBase.value) {
-        resultadoSoma.innerHTML = "Selecione a data base.";
-        return;
-    }
+btnIdade.onclick = () => {
+  if (!nasc.value) return;
+  const n = new Date(nasc.value);
+  const h = new Date();
+  const anosCalc = h.getFullYear() - n.getFullYear();
+  const diasCalc = Math.floor((h - n) / 86400000);
+  resIdade.innerHTML = `<b>${anosCalc} anos</b><br>${diasCalc} dias vividos`;
+};
 
-    const fator = operacao.value === "subtrair" ? -1 : 1;
-    let data = new Date(dataBase.value);
-
-    data.setFullYear(data.getFullYear() + fator * +anos.value);
-    data.setMonth(data.getMonth() + fator * +meses.value);
-    data.setDate(data.getDate() + fator * (+semanas.value * 7 + +dias.value));
-
-    resultadoSoma.innerHTML = `Resultado: <strong>${data.toLocaleDateString("pt-BR")}</strong>`;
-}
-
-function calcularIdade() {
-    if (!nascimento.value) return;
-
-    const nasc = new Date(nascimento.value);
-    const hoje = new Date();
-
-    let anos = hoje.getFullYear() - nasc.getFullYear();
-    let meses = hoje.getMonth() - nasc.getMonth();
-    let dias = hoje.getDate() - nasc.getDate();
-
-    if (dias < 0) {
-        meses--;
-        dias += new Date(hoje.getFullYear(), hoje.getMonth(), 0).getDate();
-    }
-    if (meses < 0) {
-        anos--;
-        meses += 12;
-    }
-
-    resultadoIdade.innerHTML = `
-        <strong>${anos} anos, ${meses} meses e ${dias} dias</strong><br>
-        Dias vividos: ${Math.floor((hoje - nasc) / 86400000)}
-    `;
-}
+btnContagem.onclick = () => {
+  if (!evento.value) return;
+  const e = new Date(evento.value);
+  const h = new Date();
+  const dias = Math.ceil((e - h) / 86400000);
+  resContagem.innerHTML = dias >= 0
+    ? `<b>Faltam ${dias} dias</b>`
+    : `<b>Já passou há ${Math.abs(dias)} dias</b>`;
+};
 </script>
 
 </body>
