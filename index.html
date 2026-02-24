@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -280,11 +279,32 @@ btnSub.onclick = () => {
 
 btnIdade.onclick = () => {
   if (!nasc.value) return;
+
   const n = new Date(nasc.value);
   const h = new Date();
-  const anosCalc = h.getFullYear() - n.getFullYear();
-  const diasCalc = Math.floor((h - n) / 86400000);
-  resIdade.innerHTML = `<b>${anosCalc} anos</b><br>${diasCalc} dias vividos`;
+
+  let anosCalc = h.getFullYear() - n.getFullYear();
+
+  const mesAtual = h.getMonth();
+  const diaAtual = h.getDate();
+
+  const mesNasc = n.getMonth();
+  const diaNasc = n.getDate();
+
+  // Verifica se ainda NÃO fez aniversário este ano
+  if (
+    mesAtual < mesNasc ||
+    (mesAtual === mesNasc && diaAtual < diaNasc)
+  ) {
+    anosCalc--;
+  }
+
+  const diasCalc = Math.floor((h - n) / (1000 * 60 * 60 * 24));
+
+  resIdade.innerHTML = `
+    <b>${anosCalc} anos</b><br>
+    ${diasCalc} dias vividos
+  `;
 };
 
 btnContagem.onclick = () => {
