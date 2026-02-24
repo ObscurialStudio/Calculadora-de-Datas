@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -215,17 +216,48 @@ tabs.forEach(btn => {
 });
 
 btnDiff.onclick = () => {
-  const d1 = new Date(inicio.value);
-  const d2 = new Date(fim.value);
   if (!inicio.value || !fim.value) return;
 
-  const dias = Math.floor((d2 - d1) / 86400000);
-  let uteis = 0;
-  for (let d = new Date(d1); d <= d2; d.setDate(d.getDate() + 1)) {
-    if (d.getDay() !== 0 && d.getDay() !== 6) uteis++;
+  let d1 = new Date(inicio.value);
+  let d2 = new Date(fim.value);
+
+  if (d2 < d1) {
+    [d1, d2] = [d2, d1];
   }
 
-  resDiff.innerHTML = `<b>${dias} dias totais</b><br>Dias úteis: ${uteis}`;
+  d1.setHours(0,0,0,0);
+  d2.setHours(0,0,0,0);
+
+  // Total de dias
+  const diffMs = d2 - d1;
+  const totalDias = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+
+  // Cálculo detalhado
+  let anos = d2.getFullYear() - d1.getFullYear();
+  let meses = d2.getMonth() - d1.getMonth();
+  let dias = d2.getDate() - d1.getDate();
+
+  if (dias < 0) {
+    meses--;
+    const ultimoMes = new Date(d2.getFullYear(), d2.getMonth(), 0);
+    dias += ultimoMes.getDate();
+  }
+
+  if (meses < 0) {
+    anos--;
+    meses += 12;
+  }
+
+  const semanas = Math.floor(dias / 7);
+  dias = dias % 7;
+
+  resDiff.innerHTML = `
+    <b>${totalDias} dias totais</b><br><br>
+    ${anos} ano(s)<br>
+    ${meses} mês(es)<br>
+    ${semanas} semana(s)<br>
+    ${dias} dia(s)
+  `;
 };
 
 btnSomar.onclick = () => {
